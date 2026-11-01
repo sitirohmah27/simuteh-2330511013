@@ -1,0 +1,5 @@
+kondisi,asli,regang,gamma0.5,gamma1.8,ekualisasi,CLAHE
+gelap,3.88,4.23,3.05,5.53,0.92,2.09
+terang,2.89,3.1,2.72,3.14,1.6,1.71
+kontras_rendah,2.04,2.2,1.96,2.15,2.17,1.58
+bayangan,1.87,1.92,1.63,2.34,1.33,1.83

@@ -1,0 +1,10 @@
+metode,KB,sigma
+asli,1.32,56.7
+negatif,1.32,56.7
+cerah+50,1.32,54.8
+kontras,1.32,79.8
+regang,1.36,79.8
+gamma0.5,1.17,41.3
+gamma1.8,1.57,60.3
+ekualisasi,1.15,73.4
+CLAHE,1.86,46.9
