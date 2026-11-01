@@ -2,7 +2,7 @@
 
 Sistem Pemeriksaan Mutu Daun Teh Berbasis Citra (tahap akuisisi dan praproses).
 
-- Nama: <Siti Rohmah Ramadhanti>
+- Nama: Siti Rohmah Ramadhanti
 - NIM: 2330511013
 - SEED dataset sintetis: 1013 (4 digit terakhir NIM)
 
