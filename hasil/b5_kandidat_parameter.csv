@@ -1,0 +1,7 @@
+kandidat,KB_normal,KB_gelap,KB_terang,KB_kontras_rendah,KB_bayangan,KB_rerata,KB_terburuk,sigma_daun_sehat
+tanpa praproses,9.51,9.36,6.07,3.63,5.81,6.88,3.63,12.0
+A clip0 median5,16.3,18.7,11.47,9.46,7.11,12.61,7.11,6.2
+B clip1 tile8 median5,14.53,18.88,8.65,7.37,8.65,11.62,7.37,6.8
+C clip2 tile8 median5,11.75,18.02,6.11,5.48,8.53,9.98,5.48,8.5
+D clip1 tile4 median5,14.58,18.49,9.12,8.28,8.66,11.82,8.28,6.3
+E A + tajam0.5,17.48,20.57,11.57,8.98,7.29,13.18,7.29,6.1
