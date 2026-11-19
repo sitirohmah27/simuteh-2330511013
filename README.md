@@ -1,30 +1,62 @@
-# SIMUTEH: Evaluasi Praktikum Computer Vision P1-P4
+# SIMUTEH: Sistem Inspeksi Mutu Daun Teh
 
-Sistem Pemeriksaan Mutu Daun Teh Berbasis Citra (tahap akuisisi dan praproses).
+Nama: Siti Rohmah Ramadhanti
+NIM: 2330511013
+SEED: 1013
+Mata kuliah: Computer Vision
 
-- Nama: Siti Rohmah Ramadhanti
-- NIM: 2330511013
-- SEED dataset sintetis: 1013 (4 digit terakhir NIM)
+Repositori ini berisi kode, hasil, dan notebook praktikum SIMUTEH. Tujuannya menilai
+mutu daun teh dari citra: mengukur persentase luas bercak dan menentukan kelas daun
+(Sehat, Bercak Ringan, Bercak Berat). Data berupa 60 citra sintetis yang dibangkitkan
+dengan SEED 1013.
 
-## Cara menjalankan
-1. Pasang pustaka: `pip install -r requirements.txt`
-2. Bangkitkan dataset dari folder utama repo: `python src/buat_dataset_sintetis.py`
-3. Jalankan notebook di folder `notebook/` berurutan: B1, B2, B3, B4, B5
-   (jalankan dari folder `notebook/` karena path memakai `../`).
-4. Gambar, tabel .csv, dan `param_praproses.json` tersimpan di `hasil/`.
+## Struktur repositori
 
-## Struktur
-- `src/`: buat_dataset_sintetis.py, utils_cv.py, praproses.py
-- `notebook/`: B1_lingkungan sampai B5_praproses
-- `hasil/`: gambar, tabel, param_praproses.json
-- `laporan/`: laporan dan slide
+```
+notebook/   B1-B5 (Pertemuan 1-4), P5_tepi, P6_morfologi
+src/        praproses.py, utils_cv.py, utils_tepi.py, bercak.py,
+            buat_dataset_sintetis.py
+hasil/      tabel CSV, gambar PNG, param_praproses.json, param_bercak.json
+data/       citra sintetis (dibangkitkan lewat skrip, tidak disertakan di ZIP)
+laporan/    laporan praktikum
+requirements.txt
+```
+
+## Cara menjalankan (Google Colab)
+
+```
+!git clone https://github.com/sitirohmah27/simuteh-2330511013.git
+%cd simuteh-2330511013
+!pip install -q -r requirements.txt
+!python src/buat_dataset_sintetis.py
+!jupyter nbconvert --execute --inplace notebook/P5_tepi.ipynb
+!jupyter nbconvert --execute --inplace notebook/P6_morfologi.ipynb
+```
+
+Skrip `buat_dataset_sintetis.py` membangkitkan 60 citra di `data/sintetis` secara
+deterministik (SEED 1013). Semua keluaran tersimpan di `hasil/`.
+
+## Isi per tahap
+
+| Tahap | Notebook | Isi |
+|---|---|---|
+| P1-P4 | B1-B5 | Praproses: resize, CLAHE kanal V, penapis median; parameter di `hasil/param_praproses.json` |
+| P5 | P5_tepi | Gradien (Sobel, Prewitt, Laplacian, LoG), Canny, sigma dan ambang, ambang otomatis dan persentil, evaluasi tepi (presisi, recall, F1, toleransi 2 piksel) |
+| P6 | P6_morfologi | Erosi, dilasi, opening, closing, gradien morfologi, elemen penstruktur, komponen terhubung, ukuran bercak, modul bercak dan evaluasinya |
+
+## Modul bercak (`src/bercak.py`)
+
+Alur: mask daun (Otsu pada saturasi) -> bercak awal (median + k x MAD pada kanal R)
+-> opening lalu closing -> komponen terhubung konektivitas 8 -> penyaringan
+(luas, kebulatan, rasio aspek) -> persentase luas bercak dan kelas.
+
+Parameter akhir (`hasil/param_bercak.json`): kanal R, k = 4,0, SE elips 5x5,
+luas minimum 20 piksel, kebulatan minimum 0,5, rasio aspek maksimum 1,8,
+batas ringan 0,1% dan batas berat 2,0%, skala 0,4375 mm per piksel.
 
 ## Ringkasan hasil
-- Kanal terbaik: R (KB tertinggi di kelima kondisi cahaya).
-- Rangkaian praproses final: CLAHE (clip 1, tile 4) pada kanal V, lalu median 5x5.
-- KB kanal R sebelum -> sesudah praproses naik di semua kondisi (+49% sampai +128%).
-- Uji bercak palsu pada kelas sehat: simpangan baku daun turun (rasio 0,42-0,58), tidak ada bercak palsu.
 
-## Catatan
-Dataset sintetis, bukan acuan diagnosis penyakit tanaman.
-Alat bantu AI generatif dipakai untuk membantu kode dan penjelasan konsep (lihat laporan, bagian Refleksi).
+- Canny pada kanal R setelah praproses memberi F1 tepi 0,984, lebih tinggi dari kanal Gray (0,890).
+- Pembersihan morfologi (opening lalu closing) menurunkan komponen bercak palsu secara besar; penyaringan bentuk menurunkan galat jumlah bercak.
+- Evaluasi 60 citra: galat absolut rerata persentase bercak 0,504, korelasi 0,928, akurasi kelas 0,917.
+
